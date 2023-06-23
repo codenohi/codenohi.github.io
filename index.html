@@ -1,29 +1,50 @@
-<body>
-      <div class="tradingview-widget-container">
-          <div class="tradingview-widget-container__widget"></div>
-          <div class="tradingview-widget-copyright" id="view"></div>
-      </div>
-      <script type="text/javascript">
-          function getParameterByName(name, url = window.location.href) {
-              name = name.replace(/[\[\]]/g, '\\$&');
-              var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-                  results = regex.exec(url);
-              if (!results) return null;
-              if (!results[2]) return '';
-              return decodeURIComponent(results[2].replace(/\+/g, ' '));
-          }
-          const container = document.getElementById("view")
-          const symbol = getParameterByName('pair')
-          document.addEventListener('DOMContentLoaded', function () {
-              var iframe = document.createElement('iframe')
-              iframe.setAttribute(
-                  'src',
-                  `https://s.tradingview.com/embed-widget/single-quote#{"symbol":"${symbol}","colorTheme":"light"}`,
-              );
-              iframe.setAttribute('frameborder', 0)
-              iframe.setAttribute('style', 'box-sizing: border-box; height: 100%; width: 100%;')
-              container.appendChild(iframe)
-          });
-      </script>
-      </div>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>title</title>
+    <link href="https://amp.azure.net/libs/amp/2.3.5/skins/amp-flush/azuremediaplayer.min.css" rel="stylesheet">
+    <script src= "https://amp.azure.net/libs/amp/2.3.5/azuremediaplayer.min.js"></script>
+  </head>
+  <body>
+    <video id="gnm" class="azuremediaplayer amp-flush-skin amp-big-play-centered" width="960" height="540">
+        <p class="amp-no-js">
+            To view this video please enable JavaScript, and consider upgrading to a web browser that supports HTML5 video
+        </p>
+    </video>
+    <script>
+		window.onmessage = (event) => {
+			if(event.data) {
+				const url = event.data.url;
+				const key = event.data.decodeKey;
+				let myPlayer = amp('gnm', {
+					"nativeControlsForTouch": false,
+					"logo": { "enabled": false },
+					autoplay: true,
+					controls: true,
+					width: "960",
+					height: "540",
+					poster: ""
+				}, function() {
+					this.addEventListener('ended', function() {
+						console.log('Finished!');
+				        window.parent.postMessage({"endedTime" : (new Date()).valueOf()}, "https://www.goodnewstheology.com/");
+					} );
+				} );
+
+				myPlayer.src( [ {
+					src: url,
+					type: "application/vnd.ms-sstr+xml",
+					protectionInfo: [{
+						type: "AES",
+						authenticationToken: key
+					}]
+				} ] );
+			}
+			else {
+				console.log("No URL");
+			}
+		};
+	</script>
   </body>
+</html>
