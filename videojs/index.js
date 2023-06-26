@@ -41,7 +41,7 @@ class VideojsPlayer extends BasePlayer {
 
     let typeUrl = Types.hlsType
     // Get a handle to the VHS tech for HLS playback. See - https://github.com/videojs/http-streaming
-    // syang062423 var vhs = player.tech().vhs;
+    var vhs = player.tech().vhs;
 
     if (this.format === 'dash') {
       typeUrl = Types.dashType
