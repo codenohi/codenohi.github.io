@@ -22,7 +22,7 @@
   <script src="https://vjs.zencdn.net/8.3.0/video.min.js"></script>
     <script>
       
-  videojs.Hls.xhr.beforeRequest = function(options) {
+  videojs.hls.xhr.beforeRequest = function(options) {
     options.headers = options.headers || {};
     options.headers.Authorization = 'Bearer=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1cm46bWljcm9zb2Z0OmF6dXJlOm1lZGlhc2VydmljZXM6Y29udGVudGtleWlkZW50aWZpZXIiOiI5ZGRhMGJjYy01NmZiLTQxNDMtOWQzMi0zYWI5Y2M2ZWE4MGIiLCJpc3MiOiJodHRwOi8vdGVzdGFjcy5jb20vIiwiYXVkIjoidXJuOnRlc3QiLCJleHAiOjE3MTA4MDczODl9.lJXm5hmkp5ArRIAHqVJGefW2bcTzd91iZphoKDwa6w8';
     console.log('options', options)
